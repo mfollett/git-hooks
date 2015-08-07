@@ -1,0 +1,14 @@
+#!/bin/bash
+
+danger_zone='master'
+
+while read local_ref local_sha remote_ref remote_sha; do
+    if [[ $remote_ref =~ $danger_zone ]]; then
+        bold=$(tput bold)
+        normal=$(tput sgr0)
+        echo >&2 "${bold}Do not push ${danger_zone} to origin.${normal}"
+        exit 1
+    fi
+done
+
+exit 1
